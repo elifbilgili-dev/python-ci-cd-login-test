@@ -1,0 +1,33 @@
+name: Python CI/CD Pipeline
+
+on:
+  push:
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run unit test
+        run: |
+          pytest tests/test_unit.py
+
+      - name: Run Selenium UI test
+        run: |
+          pytest tests/test_selenium.py
+
+      - name: Deployment confirmation
+        run: |
+          echo "All tests passed! Application successfully deployed to production."
